@@ -9,7 +9,6 @@ class BackendService {
     const authority = BASE_URI;
     const path = "hiring/clubs.json";
     final uri = Uri.https(authority, path);
-    print(uri);
 
     final response = await http.get(uri, headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8'

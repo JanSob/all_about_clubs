@@ -2,8 +2,7 @@ import 'package:all_about_clubs/models/club.dart';
 import 'package:all_about_clubs/screens/loading_screen.dart';
 import 'package:all_about_clubs/services/backend_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ClubsOverviewScreen extends StatefulWidget {
   const ClubsOverviewScreen({Key? key}) : super(key: key);
@@ -25,7 +24,6 @@ class _ClubsOverviewScreenState extends State<ClubsOverviewScreen> {
     setState(() {
       allClubs = _allClubs;
     });
-    // TODO: check state!
   }
 
   @override
@@ -33,7 +31,9 @@ class _ClubsOverviewScreenState extends State<ClubsOverviewScreen> {
     if (allClubs == null) {
       return const Center(child: LoadingScreen());
     } else {
-      return Scaffold(body: Text("Nothing here yet! :)"));
+      return Scaffold(
+          appBar: AppBar(),
+          body: Text(AppLocalizations.of(context)!.details2("Real Madrid", 2)));
     }
   }
 }

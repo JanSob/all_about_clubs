@@ -1,0 +1,36 @@
+{
+    "details1Prefix": "Der Club ",
+    "@details1Prefix": {
+      "description": "Der Club Real Madrid aus Spanien..."
+    },
+
+    "details1Postfix": " aus {COUNTRY} hat einen Wert von {VALUE} Millionen Euro.",
+    "@details1Postfix": {
+      "description": "Der Club Real Madrid aus Spanien...",
+      "placeholders": {
+        "COUNTRY": {
+            "type": "String",
+            "example": "Spain"
+            },
+        "VALUE": {
+            "type": "int",
+            "example": "600"
+            }
+        }
+    },
+
+    "details2": "{NAME} konnte bislang {NRTITLES} Siege auf europäischer Ebene erreichen.",
+    "@details2": {
+      "description": "Der zweite Teil des Detailsansicht-texts",
+      "placeholders": {
+        "NAME": {
+            "type": "String",
+            "example": "Real Madrid"
+            },
+        "NRTITLES": {
+            "type": "int",
+            "example": "3"
+            }
+        }
+    }
+}
