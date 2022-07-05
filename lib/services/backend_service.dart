@@ -11,15 +11,17 @@ class BackendService {
     final uri = Uri.https(authority, path);
 
     final response = await http.get(uri, headers: <String, String>{
-      'Content-Type': 'application/json; charset=unicode'
+      'Content-Type': 'application/json; charset=utf-8'
     });
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      List<Club> allClubs = (json.decode(response.body) as List)
-          .map((i) => Club.fromJson(i))
-          .toList();
+
+      List<Club> allClubs =
+          (json.decode(utf8.decode(response.bodyBytes)) as List)
+              .map((i) => Club.fromJson(i))
+              .toList();
       return allClubs;
     } else {
       // TODO: Better error-handling
