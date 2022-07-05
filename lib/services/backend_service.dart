@@ -11,7 +11,7 @@ class BackendService {
     final uri = Uri.https(authority, path);
 
     final response = await http.get(uri, headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8'
+      'Content-Type': 'application/json; charset=unicode'
     });
 
     if (response.statusCode == 200) {
