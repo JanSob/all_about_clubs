@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:all_about_clubs/models/club.dart';
 import 'package:all_about_clubs/screens/club_detail_screen.dart';
 import 'package:all_about_clubs/screens/loading_screen.dart';
@@ -14,6 +16,9 @@ class ClubsOverviewScreen extends StatefulWidget {
 }
 
 class _ClubsOverviewScreenState extends State<ClubsOverviewScreen> {
+  bool isReconnecting = false;
+  Timer? timer;
+  int seconds = 5;
   List<Club>? allClubs;
   bool isLoadingIcons = true;
   bool sortByValue = false;
@@ -21,6 +26,7 @@ class _ClubsOverviewScreenState extends State<ClubsOverviewScreen> {
   void initState() {
     super.initState();
     getAllClubs();
+    startTimer();
   }
 
   Future<void> getAllClubs() async {
@@ -30,10 +36,46 @@ class _ClubsOverviewScreenState extends State<ClubsOverviewScreen> {
     });
   }
 
+  void startTimer() {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (allClubs != null) timer.cancel();
+      if (seconds <= 0) {
+        getAllClubs();
+        setState(() {
+          isReconnecting = true;
+          seconds = 5;
+        });
+      } else {
+        setState(() {
+          seconds--;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    timer?.cancel();
+  }
+
   @override
   Widget build(BuildContext context) {
     if (allClubs == null) {
-      return const Center(child: LoadingScreen());
+      return Material(
+        child: Stack(children: [
+          const Center(child: LoadingScreen()),
+          if (isReconnecting)
+            Center(
+              child: Text(
+                "Trying to reconnect in  $seconds seconds",
+                textScaleFactor: 2,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+        ]),
+      );
     } else {
       return Scaffold(
           appBar: AppBar(
@@ -57,10 +99,7 @@ class _ClubsOverviewScreenState extends State<ClubsOverviewScreen> {
             child: Column(
               children: generateClubTiles(sortByValue),
             ),
-          ) /* ListView(
-            children: generateClubTiles(sortByValue),
-          ) */
-          );
+          ));
     }
   }
 
